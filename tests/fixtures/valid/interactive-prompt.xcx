@@ -1,0 +1,4 @@
+>! "Enter your name:";
+let (str) name;
+>? name;
+>! name;

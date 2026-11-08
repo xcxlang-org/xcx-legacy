@@ -1,0 +1,2 @@
+const (str) APP_NAME = "xcx-demo";
+const (int) MAX_CONNECTIONS = 100;

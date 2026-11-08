@@ -1,0 +1,5 @@
+const (str) UTILS_VERSION = "1.0";
+
+dec func (shout :: let (str) message -> str) {
+    return message + "!";
+};

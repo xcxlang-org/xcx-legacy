@@ -1,0 +1,7 @@
+# XCX 1.2 - halt inside a branch stops the whole program
+let (int) x = 1;
+if (x == 1) then;
+    >! "hit";
+    halt;
+end;
+>! "after";

@@ -1,0 +1,42 @@
+# XCX 1.2 - join: inner join on key columns with automatic aliasing
+let (table) users {
+    columns = [ id :: int @auto, name :: str ]
+    rows = [ EMPTY ]
+};
+users.insert("Adam");
+users.insert("Eve");
+
+let (table) orders {
+    columns = [ user_id :: int, product :: str ]
+    rows = [ EMPTY ]
+};
+orders.insert(1, "Laptop");
+orders.insert(2, "Phone");
+orders.insert(1, "Mouse");
+
+let (table) report = users.join(orders, "id", "user_id");
+>! report.count();
+>! report[0].name;
+>! report[0].product;
+>! report[2].product;
+
+let (table) employees {
+    columns = [ id :: int @auto, name :: str, department :: str ]
+    rows = [ EMPTY ]
+};
+employees.insert("Anna", "eng");
+employees.insert("Bernard", "sales");
+
+let (table) budgets {
+    columns = [ id :: int @auto, name :: str, budget :: float ]
+    rows = [ EMPTY ]
+};
+budgets.insert("eng", 5000.0);
+budgets.insert("sales", 3000.0);
+
+let (table) plan = employees.join(budgets, "department", "name");
+>! plan.count();
+>! plan[0].employees_name;
+>! plan[0].employees_id;
+>! plan[0].budgets_id;
+>! plan[0].budget;

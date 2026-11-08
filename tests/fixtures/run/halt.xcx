@@ -1,0 +1,4 @@
+# XCX 1.2 - halt stops execution at the exact statement
+>! "before";
+halt;
+>! "after";

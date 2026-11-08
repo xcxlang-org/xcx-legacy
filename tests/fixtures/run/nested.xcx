@@ -1,0 +1,17 @@
+# XCX 1.2 - nested conditions
+let (boolean) logged_in = true;
+let (int) access_level = 3;
+
+if (logged_in) then;
+    if (access_level >= 2) then;
+        >! "Full access";
+    els;
+        >! "Limited access";
+    end;
+els;
+    >! "No access";
+end;
+
+if (NOT logged_in) then;
+    >! "anonymous";
+end;

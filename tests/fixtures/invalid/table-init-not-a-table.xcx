@@ -1,0 +1,8 @@
+let (table) products {
+    columns = [
+        id :: int @auto,
+        name :: str
+    ]
+    rows = [ EMPTY ]
+};
+let (table) copy = 5;

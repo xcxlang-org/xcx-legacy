@@ -1,0 +1,3 @@
+dec func (double :: let (int) x -> int) {
+    return x * 2;
+};

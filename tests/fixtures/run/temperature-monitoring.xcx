@@ -1,0 +1,64 @@
+# XCX 1.2 - temperature monitoring system (the documented 15.4 example program)
+let (table) temperature_readings {
+    columns = [
+        id :: int @auto,
+        sensor_id :: str,
+        temperature :: float,
+        humidity :: float,
+        pressure :: float,
+        reading_date :: date,
+        time :: str
+    ]
+    rows = [ EMPTY ]
+};
+
+let (map :: str <-> float) alarm_thresholds = {
+    "temperature_min" :: 18.0,
+    "temperature_max" :: 25.0,
+    "humidity_max" :: 60.0
+};
+
+dec func (add_reading :: let (str) sensor, let (float) temp, let (float) hum, let (float) press) {
+    let (date) today = date.now();
+    let (str) time = "14:30";
+
+    temperature_readings.insert(sensor, temp, hum, press, today, time);
+
+    let (float) min_threshold = alarm_thresholds.get("temperature_min");
+    let (float) max_threshold = alarm_thresholds.get("temperature_max");
+    let (float) hum_max = alarm_thresholds.get("humidity_max");
+
+    if (temp < min_threshold OR temp > max_threshold) then;
+        >! "WARNING: Temperature " + temp + " out of range in sensor " + sensor;
+    end;
+
+    if (hum > hum_max) then;
+        >! "WARNING: Humidity " + hum + "% exceeds limit in sensor " + sensor;
+    end;
+};
+
+dec func (daily_report :: let (date) date_param) {
+    let (table) daily = temperature_readings.where(reading_date == date_param);
+
+    >! "=== DAILY REPORT " + date_param.format("DD-MM-YYYY") + " ===";
+    >! "Number of readings: " + daily.count();
+
+    if (daily.count() > 0) then;
+        let (float) temp_sum = 0;
+        let (int) i = 0;
+
+        while (i < daily.count()) do;
+            temp_sum = temp_sum + daily[i].temperature;
+            i = i + 1;
+        end;
+
+        let (float) average = temp_sum / daily.count();
+        >! "Average temperature: " + average + "°C";
+    end;
+};
+
+add_reading("S-001", 22.5, 45.0, 1013.25);
+add_reading("S-002", 26.8, 50.0, 1012.80);
+add_reading("S-003", 21.2, 65.0, 1014.10);
+
+daily_report(date.now());

@@ -1,0 +1,15 @@
+# XCX 1.2 - string comparisons: equality and lexicographic ordering
+let (str) first = "abc";
+let (str) second = "def";
+
+>! first == second;
+>! first != second;
+>! first < second;
+>! first <= second;
+>! second > first;
+>! second >= first;
+>! first == "abc";
+
+if (first < second) then;
+    >! "ordered";
+end;

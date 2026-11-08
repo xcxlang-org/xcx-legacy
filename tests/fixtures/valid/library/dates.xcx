@@ -1,0 +1,6 @@
+dec func (days_in_pair :: let (int) year -> int) {
+    if (year % 4 == 0) then;
+        return 366;
+    end;
+    return 365;
+};

@@ -1,0 +1,2 @@
+let (int) number = 42;
+number = "text";

@@ -1,0 +1,3 @@
+let (set) a { N = 1,,10 };
+let (set) b { S = "x", "y" };
+let (set) u = a UNION b;

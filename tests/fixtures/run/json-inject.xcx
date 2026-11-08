@@ -1,0 +1,24 @@
+# XCX 1.2 - json inject into a table through a mapping map (11.5)
+let (table) users {
+    columns = [ id :: int @auto, user_id :: int, name :: str ]
+    rows = [ EMPTY ]
+};
+
+let (json) data <<<
+{
+    "users": [
+        { "id": 101, "name": "John" },
+        { "id": 102, "name": "Anna" }
+    ]
+}
+>>>;
+
+let (map :: str <-> str) mapping = {
+    "id" :: "user_id",
+    "name" :: "name"
+};
+
+data.inject(data.users, mapping, "users");
+>! users.count();
+>! users[0].user_id;
+>! users[1].name;

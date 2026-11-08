@@ -1,0 +1,29 @@
+# XCX 1.2 - dates: constructors, properties, formatting, arithmetic, comparisons
+let (date) christmas = date("2024-12-25");
+let (date) european = date("25/12/2024", "DD/MM/YYYY");
+let (date) american = date("12/25/2024", "MM/DD/YYYY");
+
+>! christmas.year;
+>! christmas.month;
+>! christmas.day;
+>! european == christmas;
+>! american == christmas;
+
+>! christmas.format();
+>! christmas.format("DD-MM-YYYY");
+>! christmas.format("MM/DD/YYYY");
+>! christmas.format("M/D/YYYY");
+
+let (date) next_week = christmas + 7;
+>! next_week.format();
+let (date) last_week = christmas - 7;
+>! last_week.format();
+let (int) days_between = christmas - next_week;
+>! days_between;
+
+>! christmas < next_week;
+>! christmas == date("2024-12-25");
+
+let (date) today = date.now();
+>! today.year >= 2026;
+>! today.format("DD-MM-YYYY") != christmas.format("DD-MM-YYYY");

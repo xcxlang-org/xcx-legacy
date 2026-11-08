@@ -1,0 +1,80 @@
+# XCX 1.2 - sets, maps and tables
+let (set) even_numbers { N = 2,,20,,2 };
+let (set) integers { Z = -5,,5 };
+let (set) fractions { Q = 0.5,,2.5,,0.5 };
+let (set) colors { S = "red", "green", "blue" };
+let (set) booleans { B = true, false };
+let (set) letters { C = 'a', 'b', 'c', 'd' };
+let (set) mixed_ranges { N = 1,,5, 10,,15, 20,,25 };
+
+let (set) a { N = 1,,10 };
+let (set) b { N = 5,,15 };
+let (set) union_set = a UNION b;
+let (set) intersection_set = a INTERSECTION b;
+let (set) difference_set = a DIFFERENCE b;
+let (set) symmetric_set = a SYMMETRIC_DIFFERENCE b;
+
+let (int) random_even = random.choice from even_numbers;
+let (boolean) is_empty = union_set.is_empty();
+
+if (colors has "red") then;
+    >! "red is in the set";
+end;
+
+let (map :: str <-> int) person_ages = {
+    "John" :: 25,
+    "Anna" :: 30
+};
+person_ages.insert("Mary", 28);
+person_ages.insert("John", 26);
+let (int) johns_age = person_ages.get("John");
+let (boolean) exists = person_ages.has("Anna");
+let (int) people_count = person_ages.size();
+person_ages.show();
+
+for (str) person in person_ages.keys();
+    >! person + " is " + person_ages.get(person) + " years old";
+end;
+
+const (map :: str <-> int) configuration = {
+    "port" :: 8080,
+    "max_connections" :: 100
+};
+
+let (map :: int <-> float) measurements = {};
+
+let (table) employees {
+    columns = [
+        id :: int @auto,
+        first_name :: str,
+        last_name :: str,
+        age :: int,
+        salary :: float,
+        active :: boolean
+    ]
+    rows = [ EMPTY ]
+};
+
+employees.insert("John", "Smith", 30, 5000.0, true);
+employees.insert("Anna", "Nowak", 28, 6200.0, true);
+
+let (table) well_paid = employees
+    .where(age > 25)
+    .where(salary > 4000)
+    .where(active == true);
+
+>! "well paid: " + well_paid.count();
+
+for i in 0 to (employees.count() - 1);
+    >! "employee " + i + ": " + employees[i].first_name;
+end;
+
+let (table) orders {
+    columns = [
+        user_id :: int,
+        product :: str
+    ]
+    rows = [ EMPTY ]
+};
+
+let (table) report = employees.join(orders, "id", "user_id");

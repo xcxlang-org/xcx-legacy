@@ -1,0 +1,2 @@
+let (map :: str <-> int) m = { "exists" :: 42 };
+let (int) v = m.get("not_exists");

@@ -1,0 +1,25 @@
+# XCX 1.2 - functions: recursion, multi-parameter, procedures, str returns
+dec func (factorial :: let (int) n -> int) {
+    if (n <= 1) then;
+        return 1;
+    els;
+        return n * factorial :: (n - 1);
+    end;
+};
+>! "5! = " + factorial :: 5;
+
+dec func (add :: let (int) a, let (int) b -> int) {
+    return a + b;
+};
+>! add :: 2, 3;
+
+dec func (greet :: let (str) who) {
+    >! "Welcome, " + who + "!";
+};
+greet :: "XCX";
+
+dec func (make_greeting :: let (str) name -> str) {
+    return "Hello, " + name;
+};
+let (str) message = make_greeting :: "World";
+>! message;

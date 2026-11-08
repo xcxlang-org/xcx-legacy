@@ -1,0 +1,9 @@
+let (table) events {
+    columns = [ happened :: date ]
+    rows = [ EMPTY ]
+};
+events.insert(date("2023-12-31"));
+events.insert(date("2024-01-02"));
+let (table) recent = events.where(happened >= date("2024-01-01"));
+>! recent.count();
+>! recent[0].happened;

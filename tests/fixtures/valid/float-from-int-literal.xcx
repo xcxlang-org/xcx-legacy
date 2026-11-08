@@ -1,0 +1,5 @@
+# Integer literals adapt to a float declaration (the documented 15.2/15.4 pattern)
+let (float) total = 0;
+let (float) rate = 5;
+>! total;
+>! rate;

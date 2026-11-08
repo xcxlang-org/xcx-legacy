@@ -1,0 +1,12 @@
+import "config/settings.xcx";
+import "utils/math.xcx";
+import "data/config.json" as config_data;
+
+>! APP_NAME;
+>! MAX_CONNECTIONS;
+>! double :: 21;
+
+let (json) cfg = json.parse(config_data);
+let (int) port;
+cfg.bind("port", port);
+>! port;

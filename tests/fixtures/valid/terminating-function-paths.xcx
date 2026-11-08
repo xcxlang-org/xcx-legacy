@@ -1,0 +1,23 @@
+dec func (choose :: let (boolean) first -> str) {
+    if (first) then;
+        return "first";
+    els;
+        return "second";
+    end;
+};
+dec func (from_loop :: let (int) value -> int) {
+    while (true) do;
+        return value;
+    end;
+};
+dec func (checked :: let (boolean) valid -> int) {
+    if (valid) then;
+        return 7;
+    els;
+        halt;
+    end;
+};
+>! choose(true);
+>! choose(false);
+>! from_loop(42);
+>! checked(true);

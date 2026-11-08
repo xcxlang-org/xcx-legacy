@@ -1,0 +1,10 @@
+let (map :: str <-> int) scores = { "alice" :: 42 };
+>! scores.get("alice");
+>! scores.get("alice") + 1;
+>! scores.get("alice") == 42;
+const (map :: str <-> str) names = { "alice" :: "Alice" };
+>! "Hello " + names.get("alice");
+dec func (show_score) {
+    >! scores.get("alice");
+};
+show_score;

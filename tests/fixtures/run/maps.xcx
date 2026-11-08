@@ -1,0 +1,28 @@
+# XCX 1.2 - maps: literals, insert, get, has, size, show, key iteration
+let (map :: str <-> int) person_ages = {
+    "John" :: 25,
+    "Anna" :: 30
+};
+person_ages.insert("Mary", 28);
+person_ages.insert("John", 26);
+let (int) johns_age = person_ages.get("John");
+>! johns_age;
+
+let (boolean) exists = person_ages.has("Anna");
+>! exists;
+>! person_ages.size();
+person_ages.show();
+
+let (int) total = 0;
+for (str) person in person_ages.keys();
+    total = total + person_ages.get(person);
+end;
+>! total;
+
+let (map :: int <-> str) status = {
+    200 :: "OK",
+    404 :: "Not found"
+};
+let (str) status_text = status.get(200);
+>! status_text;
+>! status.size();

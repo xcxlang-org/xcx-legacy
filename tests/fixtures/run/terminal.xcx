@@ -1,0 +1,6 @@
+>! "before";
+.terminal !clean;
+>! "after";
+.terminal !help;
+.terminal !exit;
+>! "never";

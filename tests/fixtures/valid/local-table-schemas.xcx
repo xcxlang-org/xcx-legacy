@@ -1,0 +1,20 @@
+dec func (numbers :: let (int) ignored -> table) {
+    let (table) items {
+        columns = [ value :: int ]
+        rows = [ EMPTY ]
+    };
+    items.insert(42);
+    return items;
+};
+dec func (words :: let (int) ignored -> table) {
+    let (table) items {
+        columns = [ value :: str ]
+        rows = [ EMPTY ]
+    };
+    items.insert("hello");
+    return items;
+};
+let (table) first = numbers :: 0;
+let (table) second = words :: 0;
+>! first.count();
+>! second.count();

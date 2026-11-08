@@ -1,0 +1,13 @@
+/target
+/dist
+*.exe
+*.o
+*.obj
+*.a
+*.lib
+*.pdb
+*.ilk
+*.exp
+/packing/*/xcx
+/packing/*/xcx-legacy
+.video_agent/

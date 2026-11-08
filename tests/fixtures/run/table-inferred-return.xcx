@@ -1,0 +1,15 @@
+# XCX 1.2 - a procedure whose return type is inferred from its return statement (15.3)
+let (table) tasks {
+    columns = [ id :: int @auto, name :: str, status :: str ]
+    rows = [ EMPTY ]
+};
+tasks.insert("Prepare report", "todo");
+tasks.insert("Client meeting", "completed");
+
+dec func (open_tasks) {
+    return tasks.where(status != "completed");
+};
+
+let (table) urgent = open_tasks();
+>! urgent.count();
+>! urgent[0].name;

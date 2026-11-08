@@ -1,0 +1,16 @@
+# XCX 1.2 - factory function returning a table (the documented 16.5 pattern)
+dec func (create_user :: let (str) name, let (str) email -> table) {
+    let (table) user {
+        columns = [ id :: int @auto, name :: str, email :: str ]
+        rows = [ EMPTY ]
+    };
+
+    user.insert(name, email);
+    return user;
+};
+
+let (table) first = create_user :: "Ann", "ann@xcx.dev";
+let (table) second = create_user :: "Boris", "boris@xcx.dev";
+
+>! first.count();
+>! second.count();

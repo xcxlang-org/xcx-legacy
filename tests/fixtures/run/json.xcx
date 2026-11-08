@@ -1,0 +1,45 @@
+# XCX 1.2 - json: raw blocks, parse, count, exists, bind, field access, to_str
+let (json) data <<<
+{
+    "user": {
+        "name": "John",
+        "age": 25,
+        "score": 91.5,
+        "active": true
+    },
+    "settings": ["option1", "option2"]
+}
+>>>;
+>! data.count();
+>! data.exists("user.name");
+>! data.exists("user.missing");
+
+let (str) user_name;
+let (int) user_age;
+let (float) user_score;
+let (boolean) active;
+data.bind("user.name", user_name);
+data.bind("user.age", user_age);
+data.bind("user.score", user_score);
+data.bind("user.active", active);
+>! "User: " + user_name;
+>! user_age + 1;
+>! user_score;
+>! active;
+
+let (json) settings = data.settings;
+>! settings.count();
+
+if (data.exists("optional.field")) then;
+    >! "present";
+els;
+    >! "optional field does not exist";
+end;
+
+let (json) parsed = json.parse("{\"port\":8080,\"name\":\"api\"}");
+>! parsed.count();
+let (int) port;
+parsed.bind("port", port);
+>! port;
+let (str) as_text = parsed.to_str();
+>! as_text == "{\"port\":8080,\"name\":\"api\"}";

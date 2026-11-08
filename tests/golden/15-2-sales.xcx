@@ -1,0 +1,48 @@
+let (table) sales {
+    columns = [
+        id :: int @auto,
+        product :: str,
+        quantity :: int,
+        unit_price :: float,
+        sale_date :: date
+    ]
+    rows = [ EMPTY ]
+};
+
+sales.insert("Laptop", 2, 2999.99, date("2024-01-15"));
+sales.insert("Phone", 5, 1499.50, date("2024-01-16"));
+sales.insert("Laptop", 1, 2999.99, date("2024-01-17"));
+
+dec func (sales_analysis) {
+    let (float) total = 0;
+    let (int) i = 0;
+
+    while (i < sales.count()) do;
+        let (float) transaction_value = sales[i].quantity * sales[i].unit_price;
+        total = total + transaction_value;
+        i = i + 1;
+    end;
+
+    >! "Total sales: " + total;
+
+    let (map :: str <-> int) unit_count = {};
+
+    i = 0;
+    while (i < sales.count()) do;
+        let (str) prod = sales[i].product;
+        if (unit_count.has(prod)) then;
+            let (int) current = unit_count.get(prod);
+            unit_count.insert(prod, current + sales[i].quantity);
+        els;
+            unit_count.insert(prod, sales[i].quantity);
+        end;
+        i = i + 1;
+    end;
+
+    >! "Sales statistics by product:";
+    for (str) product in unit_count.keys();
+        >! "  " + product + ": " + unit_count.get(product) + " units";
+    end;
+};
+
+sales_analysis;

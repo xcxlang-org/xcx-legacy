@@ -1,0 +1,39 @@
+# XCX 1.2 - tables: insert, indexing, update, delete, count, where filters
+let (table) products {
+    columns = [
+        id :: int @auto,
+        name :: str,
+        price :: float
+    ]
+    rows = [ EMPTY ]
+};
+products.insert("Laptop", 2999.99);
+products.insert("Phone", 1499.50);
+products.insert("Mouse", 79.99);
+
+>! products[0].name;
+>! products[0].price;
+>! products.count();
+
+products.update(1, ["Smartphone", 1599.99]);
+>! products[1].name;
+>! products[1].price;
+
+products.delete(2);
+>! products.count();
+
+let (table) expensive = products.where(price > 1000);
+>! expensive.count();
+>! expensive[0].name;
+
+let (table) cheap = products.where(price < 100);
+>! cheap.count();
+
+let (float) threshold = 2000.0;
+let (table) premium = products.where(price > threshold);
+>! premium.count();
+>! premium[0].name;
+
+let (table) mid = products.where(price < 3000).where(price > 1000);
+>! mid.count();
+>! mid[1].name;

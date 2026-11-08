@@ -1,0 +1,3 @@
+let (json) data <<<{ "name": "John" }>>>;
+let (float) wrong;
+data.bind("name", wrong);

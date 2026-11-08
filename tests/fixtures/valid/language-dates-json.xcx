@@ -1,0 +1,60 @@
+# XCX 1.2 - dates and JSON
+let (date) christmas = date("2024-12-25");
+let (date) new_year = date("2025-01-01");
+let (date) european = date("25/12/2024", "DD/MM/YYYY");
+let (date) today = date.now();
+
+>! christmas.year;
+>! christmas.month;
+>! christmas.day;
+>! christmas.format("DD-MM-YYYY");
+>! christmas.format("MM/DD/YYYY");
+
+let (date) next_week = today + 7;
+let (date) last_week = today - 7;
+let (int) days_to_christmas = christmas - today;
+
+if (today >= christmas) then;
+    >! "Christmas has passed";
+els;
+    >! "Days until Christmas: " + days_to_christmas;
+end;
+
+let (json) clean_data <<<
+{
+    "user": {
+        "name": "John",
+        "last_name": "Smith",
+        "preferences": {
+            "theme": "dark",
+            "notifications": true
+        }
+    },
+    "settings": ["option1", "option2"]
+}
+>>>;
+
+>! clean_data.count();
+>! clean_data.exists("user.name");
+
+let (str) user_name;
+let (boolean) notifications;
+
+clean_data.bind("user.name", user_name);
+clean_data.bind("user.preferences.notifications", notifications);
+
+>! "User: " + user_name;
+
+if (clean_data.exists("optional.field")) then;
+    let (str) value;
+    clean_data.bind("optional.field", value);
+els;
+    >! "Optional field does not exist";
+end;
+
+let (map :: str <-> str) mapping = {
+    "id" :: "user_id",
+    "name" :: "first_name"
+};
+
+let (str) as_text = clean_data.to_str();

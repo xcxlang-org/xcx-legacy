@@ -1,0 +1,2 @@
+let (int) number = 1;
+let (float) x = number;

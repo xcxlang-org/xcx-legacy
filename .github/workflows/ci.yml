@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-and-package:
+    name: ${{ matrix.os }} - ${{ matrix.target }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            archive: zip
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            archive: tar.gz
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            archive: tar.gz
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Cache cargo
+        uses: Swatinem/rust-cache@v2
+
+      - name: Build release compiler and runtime
+        shell: pwsh
+        run: |
+          $log = Join-Path $env:RUNNER_TEMP 'xcx-build.jsonl'
+          cargo build --release --message-format=json | Tee-Object -FilePath $log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          "XCX_BUILD_LOG=$log" >> $env:GITHUB_ENV
+
+      - name: Test compiler
+        run: cargo test --release
+
+      - name: Create distribution archive
+        shell: pwsh
+        run: ./packing/package.ps1 -Target '${{ matrix.target }}' -BuildLog $env:XCX_BUILD_LOG
+
+      - name: Test packaged installation
+        shell: pwsh
+        run: |
+          $archive = Get-ChildItem 'dist/xcx-legacy-*-${{ matrix.target }}.${{ matrix.archive }}'
+          if (@($archive).Count -ne 1) { throw 'Expected one distribution archive' }
+          ./packing/tests.ps1 -Archive $archive.FullName -TestUserPath
+
+      - name: Upload distribution package
+        uses: actions/upload-artifact@v4
+        with:
+          name: xcx-legacy-${{ matrix.target }}
+          path: dist/xcx-legacy-*
+          if-no-files-found: error

@@ -1,0 +1,3 @@
+let (json) data <<<{ "a": 1 }>>>;
+let (int) x;
+data.bind("missing.path", x);

@@ -1,0 +1,5 @@
+WARNING: Temperature 26.8 out of range in sensor S-002
+WARNING: Humidity 65.0% exceeds limit in sensor S-003
+=== DAILY REPORT *
+Number of readings: 3
+Average temperature: 23.5°C

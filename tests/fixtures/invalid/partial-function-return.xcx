@@ -1,0 +1,6 @@
+dec func (number :: let (boolean) enabled -> int) {
+    if (enabled) then;
+        return 42;
+    end;
+};
+>! number :: false;

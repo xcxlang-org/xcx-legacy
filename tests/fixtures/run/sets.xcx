@@ -1,0 +1,28 @@
+# XCX 1.2 - mathematical sets: literals, algebra, has, random.choice
+let (set) even { N = 2,,10,,2 };
+>! even;
+
+let (set) a { N = 1,,5 };
+let (set) b { N = 4,,8 };
+let (set) u = a UNION b;
+>! u;
+let (set) i = a INTERSECTION b;
+>! i;
+let (set) d = a DIFFERENCE b;
+>! d;
+let (set) s = a SYMMETRIC_DIFFERENCE b;
+>! s;
+
+let (set) colors { S = "red", "green", "blue" };
+if (colors has "red") then;
+    >! "red is in";
+end;
+
+let (set) ints { Z = -3,,3 };
+if (ints has 0) then;
+    >! "zero is in";
+end;
+
+let (int) picked = random.choice from ints;
+>! picked >= -3;
+>! picked <= 3;

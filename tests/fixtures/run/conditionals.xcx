@@ -1,0 +1,32 @@
+# XCX 1.2 - if / elf / els chains and boolean conditions
+let (int) grade = 85;
+if (grade >= 60) then;
+    >! "Passed";
+els;
+    >! "Failed";
+end;
+
+let (int) points = 75;
+if (points >= 90) then;
+    >! "Grade: A";
+elf (points >= 75) then;
+    >! "Grade: B";
+elf (points >= 60) then;
+    >! "Grade: C";
+els;
+    >! "Grade: F";
+end;
+
+let (boolean) logged_in = true;
+let (boolean) has_permissions = true;
+if (logged_in AND has_permissions AND grade >= 60) then;
+    >! "Access granted";
+end;
+if (grade < 60 OR NOT logged_in) then;
+    >! "Access denied";
+end;
+if (NOT logged_in) then;
+    >! "anonymous";
+els;
+    >! "signed in";
+end;

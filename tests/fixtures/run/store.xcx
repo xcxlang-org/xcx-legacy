@@ -1,0 +1,7 @@
+let (str) file = "store-demo.txt";
+>! store.exists(file);
+store.write(file, "first line");
+>! store.read(file);
+store.append(file, "\nsecond line");
+>! store.read(file);
+>! store.exists(file);

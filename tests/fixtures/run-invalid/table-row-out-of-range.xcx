@@ -1,0 +1,9 @@
+let (table) products {
+    columns = [
+        id :: int @auto,
+        name :: str
+    ]
+    rows = [ EMPTY ]
+};
+products.insert("Laptop");
+>! products[5].name;

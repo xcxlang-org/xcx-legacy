@@ -1,0 +1,8 @@
+# XCX 1.2 - integer arithmetic executed natively
+let (int) x = 5;
+let (int) y = x * 2 + 3;
+>! y;
+>! 10 % 3;
+>! -5 + 2;
+>! 48 ++ 123456789;
+>! x + y * 2;

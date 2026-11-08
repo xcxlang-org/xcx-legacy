@@ -1,0 +1,4 @@
+let (map :: str <-> int) m = { "exists" :: 42 };
+let (str) key = "not_" + "exists";
+let (int) v = m.get(key);
+>! v;

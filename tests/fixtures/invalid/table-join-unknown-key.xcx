@@ -1,0 +1,9 @@
+let (table) left {
+    columns = [ id :: int @auto, name :: str ]
+    rows = [ EMPTY ]
+};
+let (table) right {
+    columns = [ other_id :: int, product :: str ]
+    rows = [ EMPTY ]
+};
+let (table) report = left.join(right, "key", "other_id");

@@ -1,0 +1,7 @@
+let (json) data <<<{ "users": [] }>>>;
+let (map :: str <-> int) mapping = { "id" :: 1 };
+let (table) target {
+    columns = [ id :: int @auto ]
+    rows = [ EMPTY ]
+};
+data.inject(data.users, mapping, "target");

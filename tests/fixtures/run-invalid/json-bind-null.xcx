@@ -1,0 +1,4 @@
+let (str) text = "{\"value\":null}";
+let (json) data = json.parse(text);
+let (int) x;
+data.bind("value", x);

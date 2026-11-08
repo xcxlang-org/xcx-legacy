@@ -1,0 +1,64 @@
+# XCX 1.2 - core constructs: declarations, operators, control flow, functions
+const (int) MAXIMUM_LENGTH = 1000;
+
+let (int) age = 25;
+let (str) name = "Anna";
+let (float) price = 19.99;
+let (boolean) active = true;
+let (str) text;
+text = "Hello";
+
+let (int) x = 1, y = 2, z = 3;
+
+if (age >= 18 AND active) then;
+    >! "Access granted";
+elf (age >= 65) then;
+    >! "Senior access";
+els;
+    >! "No access";
+end;
+
+if (NOT active) then;
+    >! "inactive";
+end;
+
+for i in 1 to 5;
+    if (i % 2 == 0) then;
+        continue;
+    end;
+    >! "Number: " + i;
+end;
+
+while (true) do;
+    break;
+end;
+
+dec func (factorial :: let (int) n -> int) {
+    if (n <= 1) then;
+        return 1;
+    els;
+        return n * factorial :: (n - 1);
+    end;
+};
+
+>! "5! = " + factorial :: 5;
+
+dec func (greet :: let (str) who) {
+    >! "Welcome, " + who + "!";
+};
+
+greet :: name;
+
+let (int) prefix = 48;
+let (int) phone = prefix ++ 123456789;
+
+if ("user@xcx.com" has "@") then;
+    >! "valid email";
+end;
+
+let (int) attempt = 1;
+while (attempt < 3) do;
+    attempt = attempt + 1;
+end;
+
+halt;

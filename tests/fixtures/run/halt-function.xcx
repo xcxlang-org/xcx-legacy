@@ -1,0 +1,8 @@
+# XCX 1.2 - halt inside a function stops the whole program
+dec func (stop :: let (int) code) {
+    >! "stopping";
+    halt;
+};
+>! "before";
+stop :: 1;
+>! "after";

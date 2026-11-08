@@ -1,0 +1,35 @@
+dec func (make_text :: let (int) index -> str) {
+    let (str) text = "item-" + index;
+    return text;
+};
+dec func (make_table :: let (int) index -> table) {
+    let (table) items {
+        columns = [ value :: str ]
+        rows = [ EMPTY ]
+    };
+    items.insert(make_text(index));
+    return items;
+};
+dec func (matches :: let (str) text -> boolean) {
+    let (str) copied = text + "!";
+    return copied != "missing!";
+};
+let (map :: str <-> str) retained = {};
+let (int) index = 0;
+while (index < 2000) do;
+    let (str) key = "key-" + (index % 3);
+    retained.insert(key, make_text(index));
+    let (table) current = make_table(index);
+    let (table) filtered = current.where(matches(value));
+    let (set) labels { S = make_text(index), make_text(index + 1) };
+    if (NOT (labels has make_text(index))) then;
+        halt;
+    end;
+    let (json) data = json.parse("{\"name\":\"value\"}");
+    let (str) text;
+    data.bind("name", text);
+    index = index + 1;
+end;
+for (str) key in retained.keys();
+    >! retained.get(key);
+end;

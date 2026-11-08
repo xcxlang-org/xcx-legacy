@@ -1,0 +1,8 @@
+# XCX 1.2 - boolean output and comparisons
+>! true;
+>! false;
+>! 1 < 2;
+>! 2 == 2;
+>! 3 != 3;
+>! 5 <= 4;
+>! 7 >= 7;

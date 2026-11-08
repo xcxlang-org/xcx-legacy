@@ -1,0 +1,8 @@
+# XCX 1.2 - string concatenation with every scalar type
+let (str) name = "XCX";
+let (int) version = 12;
+let (str) greeting = "Hello from " + name + " " + version;
+>! greeting;
+>! "pi: " + 3.14159;
+>! "on: " + true;
+>! 7 + " days";

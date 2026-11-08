@@ -1,0 +1,43 @@
+# XCX 1.2 - library management system (the documented 15.1 example program)
+let (table) books {
+    columns = [
+        id :: int @auto,
+        title :: str,
+        author :: str,
+        isbn :: str,
+        publication_year :: int,
+        available :: boolean
+    ]
+    rows = [ EMPTY ]
+};
+
+dec func (add_book :: let (str) title, let (str) author, let (str) isbn, let (int) year) {
+    if (isbn.length() != 13) then;
+        >! "ERROR: ISBN must be 13 characters";
+        halt;
+    end;
+
+    books.insert(title, author, isbn, year, true);
+    >! "Book added: " + title;
+};
+
+dec func (borrow_book :: let (int) book_id) {
+    let (table) to_borrow = books.where(id == book_id AND available == true);
+
+    if (to_borrow.count() == 0) then;
+        >! "Book unavailable or does not exist";
+        return;
+    end;
+
+    books.update(book_id, [to_borrow[0].title, to_borrow[0].author,
+                           to_borrow[0].isbn, to_borrow[0].publication_year, false]);
+    >! "Borrowed: " + to_borrow[0].title;
+};
+
+add_book("War and Peace", "Leo Tolstoy", "9780140447934", 1869);
+add_book("1984", "George Orwell", "9780451524935", 1949);
+
+borrow_book(1);
+
+let (table) available_books = books.where(available == true);
+>! "Available books: " + available_books.count();

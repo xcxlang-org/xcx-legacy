@@ -1,0 +1,49 @@
+let (table) tasks {
+    columns = [
+        id :: int @auto,
+        name :: str,
+        description :: str,
+        priority :: int,
+        status :: str,
+        deadline :: date,
+        assigned_to :: str
+    ]
+    rows = [ EMPTY ]
+};
+
+dec func (add_task :: let (str) name, let (str) description, let (int) priority, let (date) deadline) {
+    tasks.insert(name, description, priority, "todo", deadline, "unassigned");
+};
+
+dec func (assign_task :: let (int) task_id, let (str) employee) {
+    let (table) to_assign = tasks.where(id == task_id);
+
+    if (to_assign.count() == 0) then;
+        >! "Task does not exist";
+        return;
+    end;
+
+    tasks.update(task_id, [to_assign[0].name, to_assign[0].description,
+                           to_assign[0].priority, to_assign[0].status,
+                           to_assign[0].deadline, employee]);
+};
+
+dec func (complete_task :: let (int) task_id) {
+    tasks.update(task_id, [tasks[task_id].name, tasks[task_id].description,
+                           tasks[task_id].priority, "completed",
+                           tasks[task_id].deadline, tasks[task_id].assigned_to]);
+};
+
+dec func (urgent_tasks) {
+    let (date) tomorrow = date.now() + 1;
+    return tasks.where(deadline <= tomorrow AND status != "completed");
+};
+
+add_task("Prepare report", "Monthly sales report", 1, date.now() + 3);
+add_task("Client meeting", "Product presentation", 2, date.now() + 1);
+
+assign_task(1, "John Smith");
+complete_task(2);
+
+let (table) urgent = urgent_tasks();
+>! "Urgent tasks: " + urgent.count();

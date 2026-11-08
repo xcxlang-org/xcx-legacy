@@ -1,0 +1,35 @@
+# XCX 1.2 - input, output, store, terminal and imports
+# (import paths are resolved against the working directory, hence the long prefixes)
+import "tests/fixtures/valid/utils.xcx";
+import "tests/fixtures/valid/library/dates.xcx" as date_functions;
+import "tests/fixtures/valid/config.json" as config_json;
+
+>! "Hello world";
+>! 42;
+>! true;
+
+let (str) user_name;
+>? user_name;
+>! "Hello, " + user_name + "!";
+>! shout :: "imported";
+
+let (float) price = 19.995678;
+>! "Price: " + price;
+>! UTILS_VERSION;
+
+let (json) config = json.parse(config_json);
+
+let (str) file = "data.txt";
+store.write(file, "Sample content");
+let (str) content = store.read(file);
+store.append(file, "\nAdditional line");
+
+if (store.exists(file)) then;
+    >! "File exists";
+els;
+    >! "File does not exist";
+end;
+
+.terminal !help;
+.terminal !clean;
+.terminal !exit;

@@ -1,0 +1,9 @@
+let (table) products {
+    columns = [
+        id :: int @auto,
+        name :: str,
+        price :: float
+    ]
+    rows = [ EMPTY ]
+};
+products.insert("Laptop", 2999.99, true);

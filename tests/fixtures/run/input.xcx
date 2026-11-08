@@ -1,0 +1,11 @@
+>? name;
+let (int) age;
+let (float) rate;
+let (boolean) active;
+>? age;
+>? rate;
+>? active;
+>! "Hello, " + name + "!";
+>! age * 2;
+>! rate + 0.5;
+>! active;

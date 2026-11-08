@@ -1,0 +1,7 @@
+# XCX 1.2 - float arithmetic and formatting
+let (float) a = 7.5;
+let (float) b = 2.5;
+>! a / b;
+>! 10 / 4;
+>! a * b;
+>! -1.5 * 2.0;
